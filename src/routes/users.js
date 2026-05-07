@@ -1,4 +1,4 @@
-const express = require('express');
+Kconst express = require('express');
 const bcrypt = require('bcryptjs');
 const pool = require('../db');
 const { auth, adminOnly } = require('../middleware/auth');
@@ -42,5 +42,13 @@ router.put('/:id', auth, adminOnly, async (req, res) => {
   }
 });
 
-module.exports = router;
+router.delete('/:id', auth, adminOnly, async (req, res) => {
+  try {
+    await pool.query('DELETE FROM users WHERE id=$1', [req.params.id]);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
+module.exports = router;
