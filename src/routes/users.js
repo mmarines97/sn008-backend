@@ -1,4 +1,4 @@
-Kconst express = require('express');
+const express = require('express');
 const bcrypt = require('bcryptjs');
 const pool = require('../db');
 const { auth, adminOnly } = require('../middleware/auth');
