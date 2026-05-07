@@ -5,9 +5,10 @@ const pool = require('../db');
 const router = express.Router();
 
 router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
+  const { password } = req.body;
+  const email = req.body.email?.toLowerCase().trim();
   try {
-    const result = await pool.query('SELECT * FROM users WHERE email = $1 AND active = true', [email]);
+    const result = await pool.query('SELECT * FROM users WHERE LOWER(email) = $1 AND active = true', [email]);
     const user = result.rows[0];
     if (!user) return res.status(401).json({ error: 'Invalid credentials' });
     const valid = await bcrypt.compare(password, user.password_hash);
@@ -24,5 +25,3 @@ router.post('/login', async (req, res) => {
 });
 
 module.exports = router;
-
-
