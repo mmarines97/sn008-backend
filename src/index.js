@@ -9,6 +9,7 @@ const partsRoutes = require('./routes/parts');
 const movementsRoutes = require('./routes/movements');
 const usersRoutes = require('./routes/users');
 const returnsRoutes = require('./routes/returns');
+const cycleCountsRoutes = require('./routes/cyclecounts');
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use('/api/parts', partsRoutes);
 app.use('/api/movements', movementsRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/returns', returnsRoutes);
+app.use('/api/cyclecounts', cycleCountsRoutes);
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 
