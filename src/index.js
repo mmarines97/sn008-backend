@@ -13,6 +13,7 @@ const cycleCountsRoutes = require('./routes/cyclecounts');
 const toolingRoutes = require('./routes/tooling');
 const materialsRoutes = require('./routes/materials');
 const gseRoutes = require('./routes/gse');
+const serializedRoutes = require('./routes/serialized');
 
 const app = express();
 
@@ -31,9 +32,9 @@ app.use('/api/cyclecounts', cycleCountsRoutes);
 app.use('/api/tooling', toolingRoutes);
 app.use('/api/materials', materialsRoutes);
 app.use('/api/gse', gseRoutes);
+app.use('/api/serialized', serializedRoutes);
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-// Wed May 20 07:11:20 PDT 2026
