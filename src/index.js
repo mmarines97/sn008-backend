@@ -10,6 +10,9 @@ const movementsRoutes = require('./routes/movements');
 const usersRoutes = require('./routes/users');
 const returnsRoutes = require('./routes/returns');
 const cycleCountsRoutes = require('./routes/cyclecounts');
+const toolingRoutes = require('./routes/tooling');
+const materialsRoutes = require('./routes/materials');
+const gseRoutes = require('./routes/gse');
 
 const app = express();
 
@@ -25,6 +28,9 @@ app.use('/api/movements', movementsRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/returns', returnsRoutes);
 app.use('/api/cyclecounts', cycleCountsRoutes);
+app.use('/api/tooling', toolingRoutes);
+app.use('/api/materials', materialsRoutes);
+app.use('/api/gse', gseRoutes);
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 
