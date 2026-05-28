@@ -76,11 +76,11 @@ router.get('/export/excel', async (req, res) => {
     };
 
     ws.columns = [
-      { key:'loc',  width: 12 },
-      { key:'pn',   width: 26 },
-      { key:'desc', width: 52 },
+      { key:'loc',  width: 14 },
+      { key:'pn',   width: 30 },
+      { key:'desc', width: 70 },
       { key:'qty',  width: 8  },
-      { key:'alt',  width: 22 },
+      { key:'alt',  width: 28 },
     ];
 
     Object.keys(boxes).sort().forEach(box => {
