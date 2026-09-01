@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../db');
-const { auth, isAdmin } = require('../middleware/auth');
+const { auth, adminOnly } = require('../middleware/auth');
 
 // GET all damage reports (admin) or own reports (technician)
 router.get('/', auth, async (req, res) => {
@@ -27,7 +27,7 @@ router.get('/', auth, async (req, res) => {
 });
 
 // GET open reports count (for badge)
-router.get('/count', auth, isAdmin, async (req, res) => {
+router.get('/count', auth, adminOnly, async (req, res) => {
   try {
     const result = await pool.query("SELECT COUNT(*) as count FROM tool_damage_reports WHERE status='open'");
     res.json({ count: parseInt(result.rows[0].count) });
@@ -54,7 +54,7 @@ router.post('/', auth, async (req, res) => {
 });
 
 // PUT resolve report (admin only)
-router.put('/:id', auth, isAdmin, async (req, res) => {
+router.put('/:id', auth, adminOnly, async (req, res) => {
   try {
     const { status, admin_notes } = req.body;
     const validStatuses = ['open','sent_to_calibration','written_off','cleared'];
