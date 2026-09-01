@@ -15,7 +15,15 @@ function getMonday(d) {
 router.get('/current', auth, async (req, res) => {
   try {
     const weekStart = getMonday(new Date());
+    // First check for any overdue pending counts from previous weeks
     let counts = await pool.query(
+      'SELECT cc.*, p.pn, p.description, p.location, p.stock as current_stock, u.name as assigned_name FROM cycle_counts cc LEFT JOIN parts p ON cc.part_id = p.id LEFT JOIN users u ON cc.assigned_to = u.id WHERE cc.status = $1 AND cc.week_start < $2 ORDER BY cc.week_start DESC',
+      ['pending', weekStart]
+    );
+    // If overdue pending exist, return them
+    if (counts.rows.length > 0) return res.json(counts.rows);
+    // Otherwise get this week's counts
+    counts = await pool.query(
       'SELECT cc.*, p.pn, p.description, p.location, p.stock as current_stock, u.name as assigned_name FROM cycle_counts cc LEFT JOIN parts p ON cc.part_id = p.id LEFT JOIN users u ON cc.assigned_to = u.id WHERE cc.week_start = $1',
       [weekStart]
     );
